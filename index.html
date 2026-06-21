@@ -3,22 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soberania de Ambientes | Mentoria Estratégica</title>
+    <title>Soberania de Ambientes | Diagnóstico Sistêmico</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --bg: #0a0a0a; --accent: #d4af37; --text: #ffffff; }
-        body { margin: 0; background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
-        .container { max-width: 600px; padding: 20px; }
-        h1 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 20px; }
-        p { font-size: 1.1rem; opacity: 0.8; margin-bottom: 40px; }
-        .btn { display: inline-block; padding: 18px 35px; background: transparent; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease; }
-        .btn:hover { background: var(--accent); color: var(--bg); }
+        /* Variáveis de Cores e Estilos */
+        :root {
+            --bg-dark: #050505;
+            --text-light: #f5f5f5;
+            --text-muted: #a3a3a3;
+            --accent-gold: #c5a059;
+            --accent-glow: rgba(197, 160, 89, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Reset e Configurações Globais */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--text-light); 
+            font-family: 'Montserrat', sans-serif; 
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, var(--bg-dark) 70%);
+        }
+
+        /* Tipografia */
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+        
+        /* Hero Section (A Primeira Impressão) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            color: #ffffff;
+        }
+
+        .hero h1 span {
+            color: var(--accent-gold);
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        /* Seção do Manifesto e Pilares (Efeito Vidro) */
+        .manifesto {
+            padding: 100px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 1px; /* Bordas retas trazem mais sofisticação corporativa */
+            padding: 50px;
+            text-align: center;
+            margin-bottom: 40px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-color: rgba(197, 160, 89, 0.2);
+        }
+
+        .glass-card h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+        }
+
+        .glass-card p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        /* Botão Único Magnético */
+        .cta-container {
+            text-align: center;
+            padding: 50px 20px 100px 20px;
+        }
+
+        .btn-gold {
+            display: inline-block;
+            padding: 20px 40px;
+            background: transparent;
+            color: var(--accent-gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--accent-gold);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .btn-gold:hover {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
+        .btn-note {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Animações Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Down Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            display: block;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-10px) translateX(-50%); }
+            60% { transform: translateY(-5px) translateX(-50%); }
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Ambientes são soberanos.</h1>
-        <p>Da engenharia de espaços físicos inteligentes à arquitetura de sistemas digitais. Diagnostico o seu ecossistema atual para definir onde a maestria ainda não foi atingida.</p>
-        <a href="https://wa.me/SEUNUMERO?text=Olá, quero submeter meu projeto ao seu diagnóstico." class="btn">Solicitar Diagnóstico Sistêmico</a>
-    </div>
+
+    <section class="hero">
+        <h1>Ambientes são <span>Soberanos</span></h1>
+        <p>Da inteligência de um espaço físico à arquitetura de ecossistemas digitais. Onde o seu negócio opera dita o valor da sua execução.</p>
+        <div class="scroll-indicator">Explore</div>
+    </section>
+
+    <section class="manifesto">
+        <div class="glass-card">
+            <h2>Não aceito todos os projetos.</h2>
+            <p>Muitos profissionais possuem produtos de excelência, mas operam em ambientes caóticos que sabotam seu posicionamento. Eu não entrego soluções genéricas. Eu diagnostico a fundo a estrutura da sua marca — física, digital e sistêmica — e projeto ecossistemas onde a fricção desaparece e a autoridade impera.</p>
+        </div>
+    </section>
+
+    <section class="cta-container">
+        <a href="https://wa.me/SEUNUMERO?text=Olá, quero submeter meu projeto ao seu diagnóstico sistêmico." class="btn-gold" target="_blank">
+            Aplicar para Diagnóstico
+        </a>
+        <span class="btn-note">Apenas para negócios que exigem a maestria.</span>
+    </section>
+
 </body>
 </html>
