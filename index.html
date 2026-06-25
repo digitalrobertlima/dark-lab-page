@@ -5,269 +5,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Soberania de Ambientes | Diagnóstico Sistêmico</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-base: #030303;
-            --bg-surface: #0a0a0a;
-            --text-primary: #ffffff;
-            --text-secondary: #8a8a8a;
-            --gold-light: #d4af37;
-            --gold-dark: #aa8623;
-            --glass-border: rgba(212, 175, 55, 0.15);
-            --transition-smooth: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            --bg-dark: #030303;
+            --text-light: #fdfdfd;
+            --text-muted: #8a8a8a;
+            --accent-gold: #d4af37;
+            --accent-glow: rgba(212, 175, 55, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        /* Otimização para rolagem suave e bloqueio de zoom acidental no celular */
+        html { scroll-behavior: smooth; touch-action: manipulation; }
+        
         body { 
-            background-color: var(--bg-base); 
-            color: var(--text-primary); 
+            background-color: var(--bg-dark); 
+            color: var(--text-light); 
             font-family: 'Montserrat', sans-serif; 
+            line-height: 1.6;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Efeito de Luz de Fundo (Aura) */
-        .ambient-light {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Tipografia Editorial */
-        h1, h2, h3 { 
-            font-family: 'Playfair Display', serif; 
-            font-weight: 400; 
-            line-height: 1.1;
-        }
-
-        /* HERO SECTION */
-        .hero {
-            /* Uso do dvh para o navegador do Instagram não cortar conteúdo */
-            min-height: 100dvh; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 2rem 1.5rem;
             position: relative;
         }
 
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            display: grid;
-            gap: 2rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: revealUp 1.2s var(--transition-smooth) forwards;
+        /* Névoa de Opulência Dinâmica (Sem pesar no celular) */
+        .ambient-glow {
+            position: fixed;
+            top: -20%; left: -10%;
+            width: 120vw; height: 120vh;
+            background: radial-gradient(circle at 50% 30%, var(--accent-glow) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulseGlow 8s infinite alternate ease-in-out;
         }
 
+        @keyframes pulseGlow {
+            0% { opacity: 0.5; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        
+        /* Hero Section com DVH para o Instagram */
+        .hero {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start; /* Assimetria: alinhado à esquerda para ar editorial */
+            padding: 0 clamp(20px, 8vw, 10vw);
+            position: relative;
+            animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Tipografia Fluida (O segredo do luxo em qualquer tela) */
         .hero h1 {
-            /* Tamanho fluido: cresce proporcionalmente à tela */
             font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 2rem;
             letter-spacing: -0.02em;
+            max-width: 900px;
         }
 
         .hero h1 span {
-            display: block;
+            color: var(--accent-gold);
             font-style: italic;
-            color: var(--gold-light);
-            margin-left: clamp(1rem, 5vw, 4rem);
+            display: block; /* Quebra estratégica */
         }
 
-        .hero-subtitle {
-            font-size: clamp(1rem, 1.5vw, 1.2rem);
-            color: var(--text-secondary);
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            max-width: 500px;
             font-weight: 300;
-            max-width: 450px;
-            margin-left: auto; /* Empurra para a direita no desktop */
-            text-align: right;
-            border-right: 1px solid var(--gold-light);
-            padding-right: 1.5rem;
+            margin-bottom: 3rem;
+            border-left: 1px solid var(--accent-gold);
+            padding-left: 1.5rem;
         }
 
-        /* MANIFESTO (Editorial Asymmetric Grid) */
+        /* Manifesto - Grid Editorial */
         .manifesto {
-            padding: 8rem 1.5rem;
-            max-width: 1200px;
+            padding: clamp(60px, 15vw, 150px) clamp(20px, 8vw, 10vw);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .editorial-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 4rem;
+        @media (min-width: 1024px) {
+            .manifesto {
+                grid-template-columns: 1fr 1.2fr;
+                align-items: center;
+            }
         }
 
-        .statement {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            color: var(--text-primary);
-            max-width: 800px;
-        }
-
-        .statement span { color: var(--gold-light); font-style: italic; }
-
-        .glass-panel {
-            background: rgba(10, 10, 10, 0.4);
+        .glass-card {
+            background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            padding: clamp(2rem, 5vw, 4rem);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); /* Suporte Apple/Instagram */
+            padding: clamp(30px, 5vw, 60px);
+            border-left: 3px solid var(--accent-gold);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .glass-panel p {
-            font-size: clamp(1rem, 1.2vw, 1.1rem);
-            color: var(--text-secondary);
+        .glass-card h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
             margin-bottom: 1.5rem;
-            font-weight: 300;
+            color: var(--text-light);
         }
 
-        /* CALL TO ACTION */
-        .cta-section {
-            padding: 5rem 1.5rem 10rem;
-            text-align: center;
+        /* Botão Soberano Adaptativo */
+        .cta-container {
+            padding: 0 clamp(20px, 8vw, 10vw) 100px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
         }
 
-        /* Botão Premium */
-        .btn-luxury {
+        .btn-gold {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 1.2rem 3rem;
+            padding: 24px 48px;
             background: transparent;
-            color: var(--text-primary);
+            color: var(--accent-gold);
+            font-family: 'Montserrat', sans-serif;
             font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.2em;
+            font-weight: 600;
+            letter-spacing: 4px;
             text-transform: uppercase;
             text-decoration: none;
-            border: 1px solid var(--gold-light);
+            border: 1px solid var(--glass-border);
             position: relative;
             overflow: hidden;
-            transition: color 0.4s ease, border-color 0.4s ease;
-            /* Área de toque maior para mobile */
-            min-height: 60px; 
-            width: 100%;
+            transition: all 0.5s ease;
+            width: 100%; /* Largura total no celular */
             max-width: 400px;
         }
 
-        .btn-luxury::before {
+        .btn-gold::after {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--gold-light);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--accent-gold);
+            z-index: -1;
             transform: scaleY(0);
             transform-origin: bottom;
-            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: -1;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Hover apenas em dispositivos com mouse, evita bugs no touch */
+        @media (hover: hover) {
+            .btn-gold:hover {
+                color: var(--bg-dark);
+                border-color: var(--accent-gold);
+                box-shadow: 0 10px 40px var(--accent-glow);
+            }
+            .btn-gold:hover::after {
+                transform: scaleY(1);
+            }
+        }
+
+        /* Estado ativo para celular */
+        .btn-gold:active {
+            transform: scale(0.98);
         }
 
         .btn-note {
-            display: block;
-            margin-top: 2rem;
+            margin-top: 20px;
             font-size: 0.75rem;
-            color: var(--text-secondary);
-            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* Animações */
-        @keyframes revealUp {
+        @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ==========================================
-           MEDIA QUERIES (A Magia da Responsividade)
-           ========================================== */
-        
-        /* Ajustes para Desktop (Telas maiores que 768px) */
-        @media (min-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr 1fr;
-                align-items: end;
-            }
-            .hero h1 { grid-column: 1 / 3; }
-            .hero-subtitle { grid-column: 2 / 3; margin-bottom: 2rem; }
-            
-            .editorial-grid {
-                grid-template-columns: 1fr 1fr;
-                align-items: center;
-                gap: 6rem;
-            }
-            .statement { grid-column: 1 / 3; margin-bottom: 4rem; }
-            .glass-panel { grid-column: 2 / 3; margin-top: -10rem; }
-
-            /* Efeitos de Hover apenas para dispositivos com Mouse (evita bugs no mobile) */
-            @media (hover: hover) {
-                .btn-luxury:hover {
-                    color: var(--bg-base);
-                    border-color: transparent;
-                }
-                .btn-luxury:hover::before {
-                    transform: scaleY(1);
-                    transform-origin: top;
-                }
-            }
         }
 
     </style>
 </head>
 <body>
 
-    <div class="ambient-light"></div>
+    <div class="ambient-glow"></div>
 
     <section class="hero">
-        <div class="hero-content">
-            <h1>Ambientes são <span>Soberanos</span></h1>
-            <p class="hero-subtitle">
-                Da inteligência de um espaço físico à arquitetura de ecossistemas digitais. Onde o seu negócio opera dita o valor da sua execução.
-            </p>
-        </div>
+        <h1>Ambientes são <br><span>Soberanos.</span></h1>
+        <p>Da inteligência de um espaço físico à arquitetura de ecossistemas digitais. Onde o seu negócio opera, dita o valor da sua execução.</p>
     </section>
 
     <section class="manifesto">
-        <div class="editorial-grid">
-            <h2 class="statement">
-                Não aceito <span>todos</span> os projetos.
-            </h2>
-            <div class="glass-panel">
-                <p>Muitos profissionais possuem produtos de excelência, mas operam em ambientes caóticos que sabotam seu posicionamento.</p>
-                <p>Eu não entrego soluções genéricas. Eu diagnostico a fundo a estrutura da sua marca — física, digital e sistêmica — e projeto ecossistemas onde a fricção desaparece e a autoridade impera.</p>
+        <div class="text-block">
             </div>
+        <div class="glass-card">
+            <h2>Não aceito todos<br>os projetos.</h2>
+            <p>Muitos profissionais possuem produtos de excelência, mas operam em ambientes caóticos que sabotam seu posicionamento. Eu não entrego soluções genéricas. Eu diagnostico a fundo a estrutura da sua marca — física, digital e sistêmica — e projeto ecossistemas onde a fricção desaparece e a autoridade impera.</p>
         </div>
     </section>
 
-    <section class="cta-section">
-        <a href="https://wa.me/5531982313684?text=Ol%C3%A1%2C%20meu%20neg%C3%B3cio%20exige%20maestria.%20Cansei%20de%20ter%20uma%20entrega%20comum.%20Quero%20conhecer%20o%20pr%C3%B3ximo%20n%C3%ADvel" class="btn-luxury" target="_blank">
+    <section class="cta-container">
+        <a href="https://wa.me/5531982313684?text=Ol%C3%A1%2C%20meu%20neg%C3%B3cio%20exige%20maestria.%20Cansei%20de%20ter%20uma%20entrega%20comum.%20Quero%20conhecer%20o%20pr%C3%B3ximo%20n%C3%ADvel" class="btn-gold" target="_blank">
             Aplicar para Investigação
         </a>
         <span class="btn-note">Apenas para negócios que exigem a maestria.</span>
     </section>
-
-    <script>
-        /* Efeito sutil de paralaxe no scroll para criar profundidade */
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const glassPanel = document.querySelector('.glass-panel');
-            const ambientLight = document.querySelector('.ambient-light');
-            
-            if (window.innerWidth > 768) {
-                glassPanel.style.transform = `translateY(${scrolled * 0.1}px)`;
-            }
-            ambientLight.style.transform = `translateY(${scrolled * 0.3}px)`;
-        });
-    </script>
 
 </body>
 </html>
