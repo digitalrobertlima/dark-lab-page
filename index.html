@@ -3,188 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Soberania de Ambientes | Diagnóstico Sistêmico</title>
+    <title>Soberania | Diagnóstico Sistêmico</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Manrope:wght@200;400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #030303;
-            --text-light: #fdfdfd;
-            --text-muted: #8a8a8a;
-            --accent-gold: #d4af37;
-            --accent-glow: rgba(212, 175, 55, 0.15);
-            --glass-bg: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --black: #000000;
+            --white: #ffffff;
+            --gold: #D4AF37;
+            --dark-gold: #8B7322;
+            --gray: #333333;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Otimização para rolagem suave e bloqueio de zoom acidental no celular */
-        html { scroll-behavior: smooth; touch-action: manipulation; }
-        
-        body { 
-            background-color: var(--bg-dark); 
-            color: var(--text-light); 
-            font-family: 'Montserrat', sans-serif; 
-            line-height: 1.6;
+        html, body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'Manrope', sans-serif;
             overflow-x: hidden;
-            position: relative;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Névoa de Opulência Dinâmica (Sem pesar no celular) */
-        .ambient-glow {
+        /* O Ruído - Textura de Fundo para quebrar o "liso" digital */
+        .noise {
             position: fixed;
-            top: -20%; left: -10%;
-            width: 120vw; height: 120vh;
-            background: radial-gradient(circle at 50% 30%, var(--accent-glow) 0%, transparent 60%);
-            z-index: -1;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
             pointer-events: none;
-            animation: pulseGlow 8s infinite alternate ease-in-out;
+            z-index: 9999;
+            opacity: 0.8;
         }
 
-        @keyframes pulseGlow {
-            0% { opacity: 0.5; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1.05); }
+        /* Luz Dinâmica que segue o usuário */
+        .spotlight {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(212, 175, 55, 0.08) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 1;
         }
 
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
-        
-        /* Hero Section com DVH para o Instagram */
+        /* Hero Imponente */
         .hero {
-            min-height: 100dvh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-start; /* Assimetria: alinhado à esquerda para ar editorial */
-            padding: 0 clamp(20px, 8vw, 10vw);
+            padding: 0 5vw;
             position: relative;
-            animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(30px);
+            z-index: 10;
         }
 
-        /* Tipografia Fluida (O segredo do luxo em qualquer tela) */
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
-            max-width: 900px;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3.5rem, 12vw, 9rem);
+            line-height: 0.9;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            position: relative;
         }
 
-        .hero h1 span {
-            color: var(--accent-gold);
+        /* Efeito de preenchimento de texto agressivo */
+        .hero h1 span.solid {
+            color: var(--white);
+            -webkit-text-stroke: 0;
+            display: block;
+            margin-top: -10px;
+        }
+
+        .hero h1 span.gold {
+            color: var(--gold);
+            -webkit-text-stroke: 0;
             font-style: italic;
-            display: block; /* Quebra estratégica */
+        }
+
+        .line-accent {
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            margin: 40px 0;
+            transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--text-muted);
-            max-width: 500px;
-            font-weight: 300;
-            margin-bottom: 3rem;
-            border-left: 1px solid var(--accent-gold);
-            padding-left: 1.5rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: #999;
+            max-width: 450px;
+            font-weight: 200;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s 0.8s forwards;
         }
 
-        /* Manifesto - Grid Editorial */
+        /* Seção Manifesto - Impacto Visual */
         .manifesto {
-            padding: clamp(60px, 15vw, 150px) clamp(20px, 8vw, 10vw);
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 1024px) {
-            .manifesto {
-                grid-template-columns: 1fr 1.2fr;
-                align-items: center;
-            }
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px); /* Suporte Apple/Instagram */
-            padding: clamp(30px, 5vw, 60px);
-            border-left: 3px solid var(--accent-gold);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .glass-card h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-        }
-
-        /* Botão Soberano Adaptativo */
-        .cta-container {
-            padding: 0 clamp(20px, 8vw, 10vw) 100px;
+            min-height: 100vh;
+            padding: 15vh 5vw;
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .btn-gold {
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            padding: 24px 48px;
-            background: transparent;
-            color: var(--accent-gold);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            text-decoration: none;
-            border: 1px solid var(--glass-border);
             position: relative;
-            overflow: hidden;
-            transition: all 0.5s ease;
-            width: 100%; /* Largura total no celular */
-            max-width: 400px;
+            z-index: 10;
         }
 
-        .btn-gold::after {
+        .manifesto-box {
+            border-left: 1px solid var(--gray);
+            padding-left: clamp(20px, 5vw, 60px);
+            position: relative;
+        }
+
+        .manifesto-box::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--accent-gold);
+            top: 0; left: -1px;
+            width: 2px; height: 0%;
+            background: var(--gold);
+            transition: height 1.5s ease;
+        }
+
+        .manifesto-box.in-view::before {
+            height: 100%;
+        }
+
+        .manifesto h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            margin-bottom: 30px;
+            color: var(--white);
+            line-height: 1.1;
+        }
+
+        .manifesto p {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #888;
+            max-width: 700px;
+            font-weight: 200;
+        }
+
+        /* O Botão - Brutalista e Magnético */
+        .cta-section {
+            padding: 10vh 5vw 20vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            position: relative;
+        }
+
+        .btn-brutal {
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-brutal::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--white);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             z-index: -1;
-            transform: scaleY(0);
-            transform-origin: bottom;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Hover apenas em dispositivos com mouse, evita bugs no touch */
-        @media (hover: hover) {
-            .btn-gold:hover {
-                color: var(--bg-dark);
-                border-color: var(--accent-gold);
-                box-shadow: 0 10px 40px var(--accent-glow);
-            }
-            .btn-gold:hover::after {
-                transform: scaleY(1);
-            }
-        }
-
-        /* Estado ativo para celular */
-        .btn-gold:active {
+        .btn-brutal:hover, .btn-brutal:active {
+            color: var(--black);
+            border-color: var(--white);
             transform: scale(0.98);
         }
 
-        .btn-note {
+        .btn-brutal:hover::before, .btn-brutal:active::before {
+            transform: translateX(100%);
+        }
+
+        .btn-brutal span.arrow {
+            color: var(--gold);
+            font-size: 2rem;
+            line-height: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-brutal:hover span.arrow {
+            transform: translateX(10px);
+            color: var(--black);
+        }
+
+        .disclaimer {
             margin-top: 20px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
+            font-size: 0.7rem;
+            color: #555;
             text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* Animações e Classes JS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         @keyframes fadeUp {
@@ -195,28 +235,69 @@
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
+    <div class="noise"></div>
+    <div class="spotlight" id="spotlight"></div>
 
     <section class="hero">
-        <h1>Ambientes são <br><span>Soberanos.</span></h1>
-        <p>Da inteligência de um espaço físico à arquitetura de ecossistemas digitais. Onde o seu negócio opera, dita o valor da sua execução.</p>
+        <h1>
+            Ambientes <br>
+            <span class="solid">São</span>
+            <span class="gold">Soberanos.</span>
+        </h1>
+        <div class="line-accent" id="heroLine"></div>
+        <p>Da inteligência do espaço físico à arquitetura invisível do digital. Onde o seu negócio opera dita o limite do seu poder de cobrança.</p>
     </section>
 
     <section class="manifesto">
-        <div class="text-block">
-            </div>
-        <div class="glass-card">
-            <h2>Não aceito todos<br>os projetos.</h2>
-            <p>Muitos profissionais possuem produtos de excelência, mas operam em ambientes caóticos que sabotam seu posicionamento. Eu não entrego soluções genéricas. Eu diagnostico a fundo a estrutura da sua marca — física, digital e sistêmica — e projeto ecossistemas onde a fricção desaparece e a autoridade impera.</p>
+        <div class="manifesto-box reveal">
+            <h2>Eu não aceito<br>qualquer projeto.</h2>
+            <p>A mediocridade é contagiosa. Profissionais com entregas brilhantes apodrecem em posicionamentos genéricos.<br><br>Meu diagnóstico destrói a fricção. Eu não decoro páginas; eu construo ecossistemas onde a sua autoridade é a única regra.</p>
         </div>
     </section>
 
-    <section class="cta-container">
-        <a href="https://wa.me/5531982313684?text=Ol%C3%A1%2C%20meu%20neg%C3%B3cio%20exige%20maestria.%20Cansei%20de%20ter%20uma%20entrega%20comum.%20Quero%20conhecer%20o%20pr%C3%B3ximo%20n%C3%ADvel" class="btn-gold" target="_blank">
-            Aplicar para Investigação
+    <section class="cta-section reveal">
+        <a href="https://wa.me/5531982313684?text=Ol%C3%A1%2C%20meu%20neg%C3%B3cio%20exige%20maestria.%20Cansei%20de%20ter%20uma%20entrega%20comum.%20Quero%20conhecer%20o%20pr%C3%B3ximo%20n%C3%ADvel" class="btn-brutal" target="_blank">
+            <span>Aplicar para Análise</span>
+            <span class="arrow">→</span>
         </a>
-        <span class="btn-note">Apenas para negócios que exigem a maestria.</span>
+        <div class="disclaimer">Apenas para operações que exigem maestria.</div>
     </section>
 
+    <script>
+        // 1. Linha do Hero cresce ao carregar
+        window.addEventListener('load', () => {
+            document.getElementById('heroLine').style.width = 'clamp(100px, 30vw, 300px)';
+        });
+
+        // 2. Luz Dinâmica acompanha o mouse/toque suavemente
+        const spotlight = document.getElementById('spotlight');
+        window.addEventListener('mousemove', (e) => {
+            spotlight.style.setProperty('--x', `${e.clientX}px`);
+            spotlight.style.setProperty('--y', `${e.clientY}px`);
+        });
+        window.addEventListener('touchmove', (e) => {
+            spotlight.style.setProperty('--x', `${e.touches[0].clientX}px`);
+            spotlight.style.setProperty('--y', `${e.touches[0].clientY}px`);
+        });
+
+        // 3. Efeito de Revelação Brutalista no Scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const manifestoBox = document.querySelector('.manifesto-box');
+
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if(entry.target.classList.contains('manifesto-box')) {
+                        entry.target.classList.add('in-view');
+                    }
+                }
+            });
+        }, { threshold: 0.15 });
+
+        reveals.forEach(reveal => {
+            revealOnScroll.observe(reveal);
+        });
+    </script>
 </body>
 </html>
