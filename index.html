@@ -94,12 +94,65 @@
         .hero p {
             font-size: clamp(1rem, 3vw, 1.2rem);
             color: #999;
-            max-width: 450px;
+            max-width: 600px; /* Largura levemente aumentada para acomodar o texto */
             font-weight: 200;
             line-height: 1.8;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeUp 1s 0.8s forwards;
+        }
+
+        /* Quebra de linha controlada para o parágrafo */
+        .break-line {
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Link de atalho no Hero */
+        .hero-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeUp 1s 1.2s forwards;
+            width: fit-content;
+        }
+
+        .hero-link:hover {
+            border-bottom: 1px solid var(--gold);
+            color: var(--white);
+        }
+
+        /* Indicador de Scroll */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 5vh;
+            left: 5vw;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0;
+            animation: fadeUp 1s 1.5s forwards;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #666;
+        }
+
+        .scroll-indicator .mouse {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollLine 2s infinite cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         /* Seção Manifesto - Impacto Visual */
@@ -163,7 +216,7 @@
             max-width: 600px;
             padding: 30px;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25); /* Contraste aumentado */
             color: var(--white);
             text-decoration: none;
             font-family: 'Cinzel', serif;
@@ -173,6 +226,7 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.05); /* Glow sutil adicionado */
         }
 
         .btn-brutal::before {
@@ -231,6 +285,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes scrollLine {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            50.1% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
     </style>
 </head>
 <body>
@@ -245,7 +306,19 @@
             <span class="gold">Soberanos.</span>
         </h1>
         <div class="line-accent" id="heroLine"></div>
-        <p>Da inteligência do espaço físico à arquitetura invisível do digital. Onde o seu negócio opera dita o limite do seu poder de cobrança.</p>
+        <p>
+            Da inteligência do espaço físico à arquitetura invisível do digital. 
+            <span class="break-line">Onde o seu negócio opera dita o limite do seu poder de cobrança.</span>
+        </p>
+        
+        <!-- Atalho visual para pessoas prontas para converter -->
+        <a href="#cta" class="hero-link">Iniciar Aplicação</a>
+
+        <!-- Indicador de Rolagem para instruir o cérebro do usuário -->
+        <div class="scroll-indicator">
+            <span>Descubra</span>
+            <div class="mouse"></div>
+        </div>
     </section>
 
     <section class="manifesto">
@@ -255,7 +328,8 @@
         </div>
     </section>
 
-    <section class="cta-section reveal">
+    <!-- O ID "cta" permite que o atalho do topo ancore direto para cá -->
+    <section id="cta" class="cta-section reveal">
         <a href="https://wa.me/5531982313684?text=Ol%C3%A1%2C%20meu%20neg%C3%B3cio%20exige%20maestria.%20Cansei%20de%20ter%20uma%20entrega%20comum.%20Quero%20conhecer%20o%20pr%C3%B3ximo%20n%C3%ADvel" class="btn-brutal" target="_blank">
             <span>Aplicar para Análise</span>
             <span class="arrow">→</span>
